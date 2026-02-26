@@ -9,7 +9,7 @@ const DB_PATH = path.join(__dirname, "mensajes.json");
 const TEMPLATE_PATH = path.join(__dirname, "public", "index.html");
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public"))); // por si agregas assets luego
+app.use(express.static(path.join(__dirname, "public"), { index: false }));
 
 function escapeHtml(str) {
   return String(str)
