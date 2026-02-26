@@ -19,22 +19,38 @@
   <h1>📖 Libro de Visitas</h1>
 
   <div id="error" class="error">⚠️ Debes completar nombre y mensaje.</div>
+   <!-- se mostrara solo si la url viene con ?error=1 aunque el formulario tenga required, se pueden ingresar espacios y eso se considera un error-->
 
   <form method="POST" action="/nuevo-mensaje">
+     <!-- Formulario:
+         - method="POST": enviará datos al servidor
+         - action="/nuevo-mensaje": la ruta de Express que recibirá esos datos -->
     <input type="text" name="usuario" placeholder="Tu nombre" required />
+        <!-- name="usuario" así llega a req.body.usuario en Express -->
     <textarea name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+  <!-- Área para el mensaje.   name="mensaje" llega a req.body.mensaje -->
     <button type="submit">Enviar</button>
   </form>
 
   <h2>Mensajes</h2>
   <!-- MENSAJES_AQUI -->
 
+   <!-- app.js reemplaza este comentario por la lista real de mensajes -->
+
   <script>
-    // Muestra un error simple si vienes con ?error=1
+    // URLSearchParams sirve para leer parametros de la url, por ejemplo:
+    // /?error=1
     const params = new URLSearchParams(location.search);
     if (params.get("error") === "1") {
-      document.getElementById("error").style.display = "block";
+      document.getElementById("error").style.display = "block";   // si existe error=1 se muestra el div de error que estaba oculto
     }
+     // Formatear fechas en el navegador (hora local del usuario)
+    document.querySelectorAll(".js-fecha").forEach((el) => {
+      const iso = el.getAttribute("datetime");
+      if (!iso) return;
+      const d = new Date(iso);
+      el.textContent = d.toLocaleString(); // usa zona horaria eidioma del navegador
+    });
   </script>
 </body>
 </html>
